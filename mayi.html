@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Shireen</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#ff7aa2,#ffc0cb);
+overflow:hidden;
+color:white;
+text-align:center;
+}
+
+.container{
+max-width:650px;
+padding:30px;
+background:rgba(255,255,255,0.12);
+border-radius:20px;
+backdrop-filter:blur(6px);
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+h1{
+font-size:48px;
+margin-bottom:10px;
+}
+
+.message{
+font-size:22px;
+line-height:1.7;
+margin-top:20px;
+}
+
+.hidden{display:none}
+
+.cake{font-size:100px}
+.candle{font-size:120px;margin-top:-20px;animation:flicker 0.4s infinite alternate}
+.bear{font-size:95px}
+
+.timer{font-size:26px;margin-top:10px;font-weight:bold}
+
+.options{
+margin-top:25px;
+display:flex;
+justify-content:center;
+gap:20px;
+}
+
+.option-btn{
+padding:14px 26px;
+font-size:18px;
+border:none;
+border-radius:30px;
+background:white;
+color:#ff4f7a;
+cursor:pointer;
+font-weight:bold;
+}
+
+.kitkat{
+font-size:140px;
+margin-top:10px;
+animation:bounce 1.5s infinite;
+}
+
+@keyframes bounce{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-12px)}
+}
+
+@keyframes flicker{
+from{opacity:1}
+to{opacity:0.4}
+}
+
+.heart{position:absolute;color:red;animation:float 6s linear infinite}
+.bday{position:absolute;animation:float 7s linear infinite;font-size:24px}
+.choco{position:absolute;animation:float 8s linear infinite;font-size:26px}
+
+@keyframes float{
+0%{transform:translateY(100vh);opacity:1}
+100%{transform:translateY(-10vh);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="cakeScene">
+
+<div class="bear">🧸</div>
+<p>The teddy is getting ready to blow the candle...</p>
+
+<div class="cake">🎂</div>
+<div class="candle" id="candle">🕯️</div>
+
+<p>Make a wish...</p>
+<div class="timer" id="timer">5</div>
+
+</div>
+
+<div id="questionScreen" class="hidden">
+
+<h1>Are you excited? 😄</h1>
+
+<div class="options">
+<button class="option-btn" onclick="showMessage()">Yesss 😍</button>
+<button class="option-btn" onclick="showMessage()">Areee ha na 😌</button>
+</div>
+
+</div>
+
+<div id="birthdayMessage" class="hidden">
+
+<h1>🎉 Happy Birthday Shireen 🎉</h1>
+
+<div class="message">
+Happy birthday to the girl who stole my heart; you deserve all the love, joy, and happiness in the world today. Every day with you is a gift, and I’m so lucky to have you in my life—happy birthday, my beautiful queen.
+</div>
+
+<p style="margin-top:20px">🍫 Sending you lots of chocolates and KitKat sweetness today!</p>
+
+<p id="msgTimer">Wait... sweet surprise coming in 15s ⏳</p>
+
+</div>
+
+<div id="finalGift" class="hidden">
+
+<h1>FOR YOU ❤️</h1>
+
+<div class="kitkat">🍫</div>
+
+<p>A sweet KitKat just for you</p>
+<p>Udhar hi tumhari chocolate mujhpe 😁 💝</p>
+
+</div>
+
+</div>
+
+<script>
+
+let timeLeft = 5;
+const timerElement = document.getElementById("timer");
+
+const countdown = setInterval(()=>{
+
+timeLeft--;
+timerElement.textContent = timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(countdown);
+
+document.getElementById("cakeScene").style.display="none";
+document.getElementById("questionScreen").classList.remove("hidden");
+
+}
+
+},1000);
+
+
+function showMessage(){
+
+document.getElementById("questionScreen").style.display="none";
+
+const msg=document.getElementById("birthdayMessage");
+msg.classList.remove("hidden");
+
+let t=15;
+
+const timerText=document.getElementById("msgTimer");
+
+const msgCountdown=setInterval(()=>{
+
+t--;
+
+timerText.textContent="Wait... sweet surprise coming in "+t+"s ⏳";
+
+if(t<=0){
+
+clearInterval(msgCountdown);
+
+msg.style.display="none";
+document.getElementById("finalGift").classList.remove("hidden");
+
+}
+
+},1000);
+
+}
+
+
+function createHeart(){
+
+const heart=document.createElement("div");
+
+heart.className="heart";
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"vw";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),6000);
+
+}
+
+
+const emojis=["🎉","🎂","✨","🎈","🥳"];
+
+function createEmoji(){
+
+const e=document.createElement("div");
+
+e.className="bday";
+e.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
+
+e.style.left=Math.random()*100+"vw";
+
+document.body.appendChild(e);
+
+setTimeout(()=>e.remove(),7000);
+
+}
+
+
+function createChocolate(){
+
+const c=document.createElement("div");
+
+c.className="choco";
+c.innerHTML="🍫";
+
+c.style.left=Math.random()*100+"vw";
+
+document.body.appendChild(c);
+
+setTimeout(()=>c.remove(),8000);
+
+}
+
+setInterval(createHeart,300);
+setInterval(createEmoji,900);
+setInterval(createChocolate,1400);
+
+</script>
+
+</body>
+</html>
